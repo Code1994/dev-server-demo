@@ -15,7 +15,8 @@ module.exports = {
   output: {
     // publicPath: '/prefix/',
     path: path.resolve(__dirname, '../dist'),
-    filename: 'js/[name].[chunkhash:6].js'
+    // 开发环境下不要使用chunkhash及contenthash HMR会有冲突
+    filename: 'js/[name].[hash:6].js'
   },
   plugins: [
     new CopyWebpackPlugin([
