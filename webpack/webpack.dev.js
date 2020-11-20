@@ -28,7 +28,7 @@ const devConfig = merge(commonConfig, {
     watchOptions: {} //watch默认在webpack-dev-server是开启的 这个选项可以来针对场景配置一些具体的watch属性 https://www.webpackjs.com/configuration/watch/
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    // new webpack.HotModuleReplacementPlugin()
   ]
 })
 
@@ -65,6 +65,6 @@ module.exports = new Promise((resolve, reject) => {
 1.ip 本地ip portfinder 自动寻找未被占用的端口
 2.hmr css-hmr  部分loader内置了对HMR的支持 无需配置 譬如vue-loader
 3.proxy
-4.devtool
+4.devtool development/cheap-module-eval-source-map production/source-map
 
 */ 
