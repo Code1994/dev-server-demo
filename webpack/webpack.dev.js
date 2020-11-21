@@ -10,7 +10,7 @@ const devConfig = merge(commonConfig, {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   devServer: {
-    // 配置开发环境访问前缀 默认空字符串 没有设置值时，取out.publicPath 两者作用不同 不存在优先级问题 推荐根据环境 配置不同的output.publicPath
+    // 配置开发环境访问前缀 默认空字符串 没有设置值时，取output.publicPath 两者作用不同 不存在优先级问题 推荐根据环境 配置不同的output.publicPath
     publicPath: '/prefix/',
     // 设置index.html的寻找路径 默认为当前工作目录 即path.resolve(__dirname, '../')
     contentBase: path.resolve(__dirname, '../'),
@@ -22,12 +22,31 @@ const devConfig = merge(commonConfig, {
     hot: true, //开发环境下的output当中不要使用chunkhash或者contenthash
     liveReload: false, //测试的时候发现 需要将此属性设置为false（虽然官网并无此属性配置） 否则HMR不会生效，一直采用live reload的方式。
     inline: true, // inline模式或者iframe模式 默认为true 即inline模式
+    
+    headers: {
+      "x-response-header": "dev-server-demo"
+    }, //设置代理服务器的自定义响应头
+    // proxy: {
+    //   // 单个代理路径
+    //   '/blog': {
+    //     target: 'http://www.jsgoshu.cn',
+    //     pathRewrite: { '^/api': '' }
+    //   }
+    // },
+    proxy: [
+      // 多个代理路径
+      {
+        context: ['/blog', '/project'],
+        target: 'http://www.jsgoshu.cn'
+      }
+    ],
 
     quiet: true, //净化终端信息 清除掉无用冗余的打包信息（坑比属性 连报错也会隐藏 害的我好久才排查到chunkhash在HMR下报错 最好搭配friendly-errors-webpack-plugin使用）
     overlay: true, //将errors满屏显示在浏览器中
     watchOptions: {} //watch默认在webpack-dev-server是开启的 这个选项可以来针对场景配置一些具体的watch属性 https://www.webpackjs.com/configuration/watch/
   },
   plugins: [
+    // hot为true时 会自动启用 无需再添加
     // new webpack.HotModuleReplacementPlugin()
   ]
 })

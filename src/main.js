@@ -29,3 +29,21 @@ if (module.hot) {
     div.innerHTML = hot()
   })
 }
+
+ajax('get', '/blog/')
+ajax('get', '/project/')
+
+function ajax(method, url) {
+  const xhr = new XMLHttpRequest()
+  xhr.open(method, url)
+  xhr.onreadystatechange = function() {
+    if (this.readyState == 4) {
+      if (this.status === 200) {
+        alert('success')
+      } else {
+        alert(this.responseText)
+      }
+    }
+  }
+  xhr.send()
+}
