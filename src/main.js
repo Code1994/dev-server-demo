@@ -17,7 +17,7 @@ if (module.hot) {
     div.innerHTML = hot()
   })
 }
-console.warn('test demo')
+console.warn('test')
 
 ajax('get', '/blog/')
 ajax('get', '/project/')

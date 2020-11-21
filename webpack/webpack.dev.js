@@ -15,13 +15,15 @@ const devConfig = merge(commonConfig, {
     // 设置index.html的寻找路径 默认为当前工作目录 即path.resolve(__dirname, '../')
     contentBase: path.resolve(__dirname, '../'),
     watchContentBase: true, //保证contentBase下的index.html修改时页面热更新 依赖于live reload。关闭live reload的话 失效。
+
     host: '0.0.0.0', //默认 localhost
     port: '9527', //默认 8080
     open: false, //自动打开浏览器
     useLocalIp: true, //自动打开浏览器时是否使用本地ip 设置成true时，配合host设置成'0.0.0.0'使用
+
     hot: true, //开发环境下的output当中不要使用chunkhash或者contenthash
-    hotOnly: true, //只采用hot模式刷新 即使设置了hot，但改变main.js的时候，还是live reload，所以设置此属性。
     liveReload: false, //测试的时候发现 需要将此属性设置为false（虽然官网并无此属性配置） 否则HMR不会生效，一直采用live reload的方式。
+    hotOnly: true, //只采用hot模式刷新 即使设置了hot，但改变main.js的时候，还是live reload，所以设置此属性。
     inline: true, // inline模式或者iframe模式 默认为true 即inline模式
     
     headers: {
@@ -31,7 +33,7 @@ const devConfig = merge(commonConfig, {
     //   // 单个代理路径
     //   '/blog': {
     //     target: 'http://www.jsgoshu.cn',
-    //     pathRewrite: { '^/api': '' }
+    //     pathRewrite: { '^/blog': '/project' }
     //   }
     // },
     proxy: [
@@ -66,7 +68,7 @@ module.exports = new Promise((resolve, reject) => {
         new FriendlyErrorsPlugin({
           compilationSuccessInfo: {
             messages: [
-              `Your application is running here: ${ httpType }://127.0.0.1:${ port } ${ httpType }://${ ip.address() }:${ port }`
+              `Your application is running here: ${ httpType }://${ devConfig.devServer.host }:${ port } ${ httpType }://127.0.0.1:${ port } ${ httpType }://${ ip.address() }:${ port }`
             ]
           }
         })

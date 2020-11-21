@@ -14,7 +14,8 @@ module.exports = {
     extensions: ['.js', '.json']
   },
   output: {
-    // publicPath: '/prefix/',
+    // 开发环境下 devServer.publicPath`与`output.publicPath`最好保持一致
+    // publicPath: '/output/',
     path: path.resolve(__dirname, '../dist'),
     // 开发环境下不要使用chunkhash及contenthash HMR会有冲突
     filename: 'js/[name].[hash:6].js'
