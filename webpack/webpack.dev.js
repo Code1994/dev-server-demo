@@ -1,5 +1,5 @@
 const path = require('path')
-const webpack = require('webpack')
+// const webpack = require('webpack')
 const { merge } = require('webpack-merge')
 const commonConfig = require('./webpack.common')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
@@ -14,12 +14,13 @@ const devConfig = merge(commonConfig, {
     publicPath: '/prefix/',
     // 设置index.html的寻找路径 默认为当前工作目录 即path.resolve(__dirname, '../')
     contentBase: path.resolve(__dirname, '../'),
-    watchContentBase: true, //保证contentBase下的index.html修改时页面热更新
+    watchContentBase: true, //保证contentBase下的index.html修改时页面热更新 依赖于live reload。关闭live reload的话 失效。
     host: '0.0.0.0', //默认 localhost
     port: '9527', //默认 8080
-    open: true, //自动打开浏览器
+    open: false, //自动打开浏览器
     useLocalIp: true, //自动打开浏览器时是否使用本地ip 设置成true时，配合host设置成'0.0.0.0'使用
     hot: true, //开发环境下的output当中不要使用chunkhash或者contenthash
+    hotOnly: true, //只采用hot模式刷新 即使设置了hot，但改变main.js的时候，还是live reload，所以设置此属性。
     liveReload: false, //测试的时候发现 需要将此属性设置为false（虽然官网并无此属性配置） 否则HMR不会生效，一直采用live reload的方式。
     inline: true, // inline模式或者iframe模式 默认为true 即inline模式
     
@@ -82,8 +83,8 @@ module.exports = new Promise((resolve, reject) => {
 
 /*
 1.ip 本地ip portfinder 自动寻找未被占用的端口
-2.hmr css-hmr  部分loader内置了对HMR的支持 无需配置 譬如vue-loader
-3.proxy
+2.hmr css-hmr  部分loader内置了对HMR的支持 无需配置 譬如vue loader与react hot loader。
+3.proxy  可以是对象或数组
 4.devtool development/cheap-module-eval-source-map production/source-map
 
 */ 
